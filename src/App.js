@@ -1,8 +1,8 @@
+import Body from "./components/Body";
+
 const App = () => {
   return (
-    <div className="text-3xl font-bold text-green-900">
-    Hello
-    </div>
+    <Body/>
   );
 }
 
