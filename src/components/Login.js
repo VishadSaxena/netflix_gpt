@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react'
 import Header from './Header'
 import {checkSignUpData, checkValidData} from '../utils/validate'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../utils/firebase';
 
 const Login = () => {
   const [SignInForm, setSignInForm] = useState(true);
@@ -9,19 +11,50 @@ const Login = () => {
   const password = useRef(null);
   const fullName = useRef(null);
 
-  const ValidateData = () => {
-    // console.log(email.current.value);
-    // console.log(password.current.value);
+  const ValidateData = () => { // Validation function
     if(SignInForm) 
     { 
-      const message = checkValidData(email.current.value,password.current.value);
-    // console.log(message);
+      const message = checkValidData(email.current.value,password.current.value); // Validation for Sign In 
       setErrorMessage(message);
+      if(message) return ;  // Return as Validation was wrong no need to Authenticate
     } 
     else
      {
-       const message = checkSignUpData(fullName.current.value,email.current.value,password.current.value);
+       const message = checkSignUpData(fullName.current.value,email.current.value,password.current.value); // Validation for Sign Up
       setErrorMessage(message);
+      if(message) return ;  // Return as Validation was wrong no need to Authenticate
+    }
+
+               // Authentication Logic
+
+    if(!SignInForm) { // Sign Up Authentication
+      createUserWithEmailAndPassword(auth, email.current.value,password.current.value)
+      .then((userCredential) => {
+      // Signed up 
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        setErrorMessage(errorCode + " " + errorMessage);
+      });
+    }
+    else
+    {    // Sign In Authentication
+      signInWithEmailAndPassword(auth, email.current.value,password.current.value)
+      .then((userCredential) => {
+      // Signed in 
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        setErrorMessage(errorCode + " " + errorMessage);
+      });
     }
   }
 
