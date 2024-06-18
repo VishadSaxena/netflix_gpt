@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react'
 import Header from './Header'
 import {checkSignUpData, checkValidData} from '../utils/validate'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [SignInForm, setSignInForm] = useState(true);
@@ -10,6 +11,7 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const fullName = useRef(null);
+  const navigate = useNavigate();
 
   const ValidateData = () => { // Validation function
     if(SignInForm) 
@@ -32,6 +34,15 @@ const Login = () => {
       .then((userCredential) => {
       // Signed up 
         const user = userCredential.user;
+        updateProfile(user, {
+          displayName: fullName.current.value, photoURL: "https://occ-0-6246-2186.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABaSDR-kTPhPYcVVGSsV0jC3D-Q5HZSFE6fjzAM-4cMpltx1Gw9AV7OTnL8sYnC6CBxOBZQEAJLjStt822uD2lctOvNR05qM.png?r=962"
+        }).then(() => {
+          navigate("/browse");
+        }).catch((error) => {
+          setErrorMessage(error.message);
+        });
+        
+        
         // console.log(user);
       })
       .catch((error) => {
@@ -47,6 +58,7 @@ const Login = () => {
       .then((userCredential) => {
       // Signed in 
         const user = userCredential.user;
+        navigate("/browse")
         // console.log(user);
       })
       .catch((error) => {
