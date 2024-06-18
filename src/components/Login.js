@@ -4,6 +4,8 @@ import {checkSignUpData, checkValidData} from '../utils/validate'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 
 const Login = () => {
   const [SignInForm, setSignInForm] = useState(true);
@@ -12,6 +14,7 @@ const Login = () => {
   const password = useRef(null);
   const fullName = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const ValidateData = () => { // Validation function
     if(SignInForm) 
@@ -37,6 +40,9 @@ const Login = () => {
         updateProfile(user, {
           displayName: fullName.current.value, photoURL: "https://occ-0-6246-2186.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABaSDR-kTPhPYcVVGSsV0jC3D-Q5HZSFE6fjzAM-4cMpltx1Gw9AV7OTnL8sYnC6CBxOBZQEAJLjStt822uD2lctOvNR05qM.png?r=962"
         }).then(() => {
+          const {uid, email, displayName, photoURL} = auth.currentUser;
+          
+          dispatch(addUser({uid: uid, email: email, displayName: displayName, photoURL: photoURL}));
           navigate("/browse");
         }).catch((error) => {
           setErrorMessage(error.message);
