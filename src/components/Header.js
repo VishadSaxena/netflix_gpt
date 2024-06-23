@@ -14,9 +14,7 @@ const Header = () => {
   const user = useSelector(store => store.user);
 
   const SignOutHandler = () => {
-    signOut(auth).then(() => {        // On click btn => Sign-out successful.
-      
-      navigate("/");
+    signOut(auth).then(() => {        // On click btn => Sign-out successful as auth changed.
     }).catch((error) => {
       // An error happened.
       navigate("/error");
@@ -27,7 +25,7 @@ const Header = () => {
 
   
   useEffect( () => {
-    onAuthStateChanged(auth, (user) => {        // API called whenever Auth changes (Event Listener type) Whenever User State changes
+    const unsubscribe = onAuthStateChanged(auth, (user) => {        // API called whenever Auth changes (Event Listener type) Whenever User State changes
     if (user) { // Signed In / Signed Up user
       const {uid, email, displayName, photoURL} = user;
       
@@ -40,6 +38,8 @@ const Header = () => {
       
     }
   });
+
+  return () => unsubscribe(); // Unsubscribe when component unmounts
 }, []);
 
   return (
