@@ -3,9 +3,9 @@ import Header from './Header'
 import {checkSignUpData, checkValidData} from '../utils/validate'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { BACKGROUND_PIC } from '../utils/constants';
 
 const Login = () => {
   const [SignInForm, setSignInForm] = useState(true);
@@ -13,7 +13,6 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const fullName = useRef(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const ValidateData = () => { // Validation function
@@ -82,7 +81,7 @@ const Login = () => {
     <div>
         <Header/>
         <div className="absolute">
-          <img src="https://assets.nflxext.com/ffe/siteui/vlv3/51c1d7f7-3179-4a55-93d9-704722898999/be90e543-c951-40d0-9ef5-e067f3e33d16/IN-en-20240610-popsignuptwoweeks-perspective_alpha_website_small.jpg" alt="Background" />
+          <img src= {BACKGROUND_PIC} alt="Background" />
         </div>
         <form onSubmit={(e)=> e.preventDefault()} className="absolute w-3/12 p-12 bg-black my-36 mx-auto right-0 left-0 text-white bg-opacity-90">
             <h1 className="font-bold text-3xl py-4">{(SignInForm) ? "Sign In" : "Sign Up"}</h1>
