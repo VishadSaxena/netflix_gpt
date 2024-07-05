@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react'
 import Header from './Header'
-import { API_OPTIONS } from '../utils/constants'
-import { useDispatch } from 'react-redux'
-import { addNowPlayingMovies } from '../utils/moviesSlice'
 import useFetchNowPlayingMovies from '../hooks/useFetchNowPlayingMovies'
+import MainContainer from './MainContainer';
+import SecondaryContainer from './SecondaryContainer';
 
 const Browse = () => {
 
@@ -12,6 +10,8 @@ const Browse = () => {
   return (
     <div>
       <Header />
+      <MainContainer />
+      <SecondaryContainer/>
     </div>
   )
 }
