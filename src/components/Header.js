@@ -47,7 +47,7 @@ const Header = () => {
         <img className="w-44 " src={NETFLIX_LOGO} alt="logo" />
         {user && <div className="flex w-30 h-18 py-3">
           <img alt="Display-Pic" src= {PROFILE_PIC} />
-          <button className="p-1 font-bold text-black" onClick={SignOutHandler}>(Sign Out)</button>
+          <button className="p-1 font-bold text-white" onClick={SignOutHandler}>(Sign Out)</button>
         </div>}
     </div>
   )
