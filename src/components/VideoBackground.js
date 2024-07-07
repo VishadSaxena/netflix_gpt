@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react'
-import { API_OPTIONS } from '../utils/constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { addMovieTrailers } from '../utils/moviesSlice';
+import { useSelector } from 'react-redux';
 import useMoviesTrailer from '../hooks/useMoviesTrailer';
 
 const VideoBackground = ({movieId}) => {
 
     const trailer = useSelector((store) => store.movies?.movieTrailers);      
     
-    useMoviesTrailer(movieId);
+    useMoviesTrailer(movieId);                                                      // Custom hook to fecth and update the store with videos of movieId
 
     
   return (

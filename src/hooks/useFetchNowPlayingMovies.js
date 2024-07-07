@@ -13,7 +13,7 @@ const useFetchNowPlayingMovies = () => {
   },[]);
 
 
-  const fetchNowPlayingAPI = async () => { // Fetching the Now Playing Movies API and adding them to store with Slice movies
+  const fetchNowPlayingAPI = async () => { // Fetching the Now Playing Movies API and adding them to store with Slice movie
     
     const data = await fetch("https://api.themoviedb.org/3/movie/now_playing", API_OPTIONS);
 

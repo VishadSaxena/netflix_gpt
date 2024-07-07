@@ -1,13 +1,13 @@
 import React from 'react'
 import VideoTitle from './VideoTitle'
 import VideoBackground from './VideoBackground'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const MainContainer = () => {
     const movies = useSelector((store) => store.movies?.nowPlayingMovies);
 
     if(!movies) return ;                    // Initially in 1st render API isnt called, without this it will throw error that movies[] is empty
-    const mainMovie = movies[0];
+    const mainMovie = movies[0];            // making the 1st movie as video background and video title - movie
 
     //console.log(mainMovie);
 
